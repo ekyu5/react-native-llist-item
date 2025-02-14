@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, Button, TouchableOpacity, ImageSourcePropType } from 'react-native';
 
-interface MainAccountItemProps {
-  image: string[];
+interface MainListItemProps {
+  image: ImageSourcePropType|ImageSourcePropType[];
   imageType?: 'avatar' | 'icon';
   description: string;
   mainValue: number;
@@ -12,22 +12,22 @@ interface MainAccountItemProps {
   onPress?: () => void;
 }
 
-export default class MainAccountItem extends React.Component<MainAccountItemProps> {
+export default class MainListItem extends React.Component<MainListItemProps> {
   render() {
     return (
       <View style={styles.container}>
         <View style={{ position: 'relative', width: 50, height: 50, marginRight: 10 }}>
-        {this.props.image.length === 1 && 
-          <Image source={{uri: this.props.image[0]}} style={this.props.imageType === 'avatar' ? styles.avatar : styles.icon} />
+        {!Array.isArray(this.props.image) && 
+          <Image source={this.props.image} style={this.props.imageType === 'avatar' ? styles.avatar : styles.icon} />
         }
-        {this.props.image.length > 1 && 
+        {Array.isArray(this.props.image) && this.props.image.length > 1 && 
           <View style={{ position: 'static', width: 50, height: 50 }}>
             <Image 
-              source={{uri: this.props.image[this.props.image.length - 1]}} 
+              source={this.props.image[this.props.image.length - 1]} 
               style={[this.props.imageType === 'avatar' ? styles.avatar : styles.icon, { position: 'absolute', bottom: -3, left: 4, width: 50 * 0.9, height: 50 * 0.9 }]} 
             />
             <Image 
-              source={{uri: this.props.image[0]}} 
+              source={this.props.image[0]} 
               style={[this.props.imageType === 'avatar' ? styles.avatar : styles.icon, { position: 'absolute', top: -3, left: 0, width: 50 * 0.9, height: 50 * 0.9 }]} 
             />
           </View>
