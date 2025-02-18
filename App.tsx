@@ -109,11 +109,10 @@ export default class App extends React.Component {
                 <AccountBalanceItem
                   key={item.title}
                   image={Array.isArray(item.image) ? item.image.map(img => ({uri: img})) : {uri: item.image}}
-                  imageContainerStyle={Array.isArray(item.image) ? styles.imageContainer : styles.avatar}
+                  imageContainerStyle={[styles.avatar, Array.isArray(item.image) ? styles.imageContainer : undefined]}
                   title={item.title}
                   description={item?.description}
                   balance={item.balance.toLocaleString() + '원'}
-                  balanceStyle={styles.textBalance}
                   right={
                     <TouchableOpacity style={styles.buttonSend} onPress={() => {console.log('onclick : ' + item.title)}}>
                       <Text style={styles.buttonSendText}>송금</Text>
@@ -210,14 +209,15 @@ const styles = StyleSheet.create({
   horizontalLine: {
     height: 1,
     backgroundColor: '#F0F0F0', // 수평선 색상
-    marginVertical: 20, // 수직 여백
+    marginVertical: 10, // 수직 여백
   },
   defaultFont: {
     fontFamily: 'Pretendard-SemiBold',
   },
   textTitle: {
     fontSize: 19.4,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    paddingVertical: 10,
   },
   textDescription: {
     color: '#D44950',
@@ -257,10 +257,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  textBalance: {
-    marginBottom: 20,
+    marginVertical: 10,
   },
   textCredit: {
     fontSize: 15,
@@ -270,6 +267,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingVertical: 10,
   },
   itemOpen: {
     fontSize: 15,

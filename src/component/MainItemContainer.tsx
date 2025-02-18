@@ -23,8 +23,8 @@ export default class MainItemContainer extends React.Component<MainItemContainer
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 20,
-    padding: 20,
+    borderRadius: 25,
+    paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 15,
     marginHorizontal: 20,

@@ -23,10 +23,18 @@ export default class AccountBalanceItem extends React.Component<AccountBalancePr
             if (this.props.image.length > 1) {
                 image = [];
                 const firstImage = this.props.image[0];
-                image.push(<Image key={1} source={firstImage} style={[styles.image, this.props.image.length > 1 ? styles.imageDoubleTop : styles.image]} />);
+                image.push(
+                    <View key={1} style={[this.props.imageContainerStyle, this.props.image.length > 1 ? styles.imageDoubleTop : undefined]}>
+                        <Image source={firstImage} style={[styles.image]} />
+                    </View>
+                );
                 if (this.props.image.length > 1) {
                     const secondImage = this.props.image[1];
-                    image.unshift(<Image key={2} source={secondImage} style={[styles.image, styles.imageDoubleBottom]} />);
+                    image.unshift(
+                        <View key={2} style={[this.props.imageContainerStyle, this.props.image.length > 1 ? styles.imageDoubleBottom : undefined]}>
+                            <Image source={secondImage} style={[styles.image]} />
+                        </View>
+                    );
                 }
             } else if (this.props.image.length === 1) {
                 image = <Image source={this.props.image[0]} style={styles.image} />;
@@ -64,11 +72,12 @@ const styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
       alignItems: 'center',
+      paddingVertical: 10,
     },
     imageContainer: {
         width: 40,
         height: 40,
-        marginRight: 10,
+        marginRight: 15,
     },
     image: {
         width: '100%',
