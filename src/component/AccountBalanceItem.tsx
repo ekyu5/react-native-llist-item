@@ -53,7 +53,7 @@ export default class AccountBalanceItem extends React.Component<AccountBalancePr
 
     render() {
         return (
-            <TouchableOpacity style={styles.container}>
+            <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
                 {this.renderImage()}
                 <View style={styles.textContainer}>
                     <Text style={[styles.defaultFont, styles.textTitle, this.props.titleStyle]} >{this.props.title}</Text>
