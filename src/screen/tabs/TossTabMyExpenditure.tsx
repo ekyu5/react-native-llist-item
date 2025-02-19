@@ -1,6 +1,7 @@
 import React from "react";
-import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Animated, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Svg, Line, Rect, Circle, Polyline } from 'react-native-svg';
 
 const monthlyData = [
     {
@@ -53,7 +54,150 @@ const monthlyData = [
     },
 ]
 
-const dailyeData = [
+const dailyData = [
+    {
+        date: '2025-02-01',
+        expenditure: 10000,
+        revenue: 100000,
+    },
+    {
+        date: '2025-02-02',
+        expenditure: 20000,
+        revenue: 200000,
+    },
+    {
+        date: '2025-02-03',
+        expenditure: 30000,
+        revenue: 300000,
+    },
+    {
+        date: '2025-02-04',
+        expenditure: 40000,
+        revenue: 400000,
+    },
+    {
+        date: '2025-02-05',
+        expenditure: 50000,
+        revenue: 500000,
+    },
+    {
+        date: '2025-02-06',
+        expenditure: 60000,
+        revenue: 600000,
+    },
+    {
+        date: '2025-02-07',
+        expenditure: 70000,
+        revenue: 700000,
+    },
+    {
+        date: '2025-02-08',
+        expenditure: 80000,
+        revenue: 800000,
+    },
+    {
+        date: '2025-02-09',
+        expenditure: 90000,
+        revenue: 900000,
+    },
+    {
+        date: '2025-02-10',
+        expenditure: 100000,
+        revenue: 1000000,
+    },
+    {
+        date: '2025-02-11',
+        expenditure: 110000,
+        revenue: 1100000,
+    },
+    {
+        date: '2025-02-12',
+        expenditure: 120000,
+        revenue: 1200000,
+    },
+    {
+        date: '2025-02-13',
+        expenditure: 130000,
+        revenue: 1300000,
+    },
+    {
+        date: '2025-02-14',
+        expenditure: 140000,
+        revenue: 1400000,
+    },
+    {
+        date: '2025-02-15',
+        expenditure: 150000,
+        revenue: 1500000,
+    },
+    {
+        date: '2025-02-16',
+        expenditure: 160000,
+        revenue: 1600000,
+    },
+    {
+        date: '2025-02-17',
+        expenditure: 170000,
+        revenue: 1700000,
+    },
+    {
+        date: '2025-02-18',
+        expenditure: 180000,
+        revenue: 1800000,
+    },
+    {
+        date: '2025-02-19',
+        expenditure: 190000,
+        revenue: 1900000,
+    },
+    {
+        date: '2025-02-20',
+        expenditure: 200000,
+        revenue: 2000000,
+    },
+    {
+        date: '2025-02-21',
+        expenditure: 210000,
+        revenue: 2100000,
+    },
+    {
+        date: '2025-02-22',
+        expenditure: 220000,
+        revenue: 2200000,
+    },
+    {
+        date: '2025-02-23',
+        expenditure: 230000,
+        revenue: 2300000,
+    },
+    {
+        date: '2025-02-24',
+        expenditure: 240000,
+        revenue: 2400000,
+    },
+    {
+        date: '2025-02-25',
+        expenditure: 250000,
+        revenue: 2500000,
+    },
+    {
+        date: '2025-02-26',
+        expenditure: 260000,
+        revenue: 2600000,
+    },  
+    {
+        date: '2025-02-27',
+        expenditure: 270000,
+        revenue: 2700000,
+    },
+    {
+        date: '2025-02-28',
+        expenditure: 280000,
+        revenue: 2800000,
+    },
+];
+
+const prevMonthDailyData = [
     {
         date: '2025-01-01',
         expenditure: 10000,
@@ -80,7 +224,7 @@ const dailyeData = [
         revenue: 500000,
     },
     {
-        date: '2025-01-06',     
+        date: '2025-01-06',
         expenditure: 60000,
         revenue: 600000,
     },
@@ -209,7 +353,7 @@ const dailyeData = [
         expenditure: 310000,
         revenue: 3100000,
     },
-]
+];
 
 class MyExpenditureState {
     selectedMonth: number = 0;
@@ -229,13 +373,12 @@ export default class TossTabMyExpenditure extends React.Component<any, MyExpendi
     generateCalendar(year: number, month: number) {
         const firstDay = new Date(year, month, 1).getDay(); // 이번 달 첫 날 요일 (0: 일요일 ~ 6: 토요일)
         const totalDays = new Date(year, month, 0).getDate(); // 이번 달 총 일 수
-        console.log('totalDays : ' + totalDays)
         const calendar = [];
         for (let i = 0; i < firstDay; i++) {
           calendar.push({ key: `empty-${i}`, day: null }); // 첫 주 빈칸
         }
         for (let i = 1; i <= totalDays; i++) {
-          calendar.push({ key: `${year}-${month + 1}-${i}`, day: i }); // 실제 날짜
+          calendar.push({ key: `${i}`, day: i }); // 실제 날짜
         }
         for (let i = 0; i < 7 - (totalDays + firstDay) % 7; i++) {
             calendar.push({ key: `empty-${i}`, day: null });
@@ -253,6 +396,58 @@ export default class TossTabMyExpenditure extends React.Component<any, MyExpendi
         this.setState({
             selectedMonth: this.state.selectedMonth - 1,
         });
+    }
+
+    renderChart(height: number, width: number) {
+        const today = new Date();
+        const todayIndex = dailyData.findIndex(data => new Date(data.date) <= today);
+        
+        const prevMonthExpenditure = prevMonthDailyData.reduce((acc, data) => acc + data.expenditure, 0);
+        
+        // 누적 지출 계산
+        const curExpenditure = dailyData.slice(0, todayIndex + 1).reduce((acc, data) => {
+            return acc + data.expenditure; // 누적 지출 계산
+        }, 0);
+
+        const maxY = Math.max(prevMonthExpenditure, curExpenditure);
+        const scaleX = (index: number) => (index / prevMonthDailyData.length) * width;
+        const scaleY = (value: number) => {
+            if (maxY > 0) {
+                return height - (value / maxY) * height; // maxY가 0이 아닐 때 정상적으로 계산
+            }
+            return height; // maxY가 0일 때 기본값
+        };
+
+        const prevMonthCumulativeData: number[] = [];
+        prevMonthDailyData.forEach((d, i) => {
+            const cumulativeExpenditure = prevMonthCumulativeData.length > 0 ? prevMonthCumulativeData[prevMonthCumulativeData.length - 1] + d.expenditure : d.expenditure;
+            prevMonthCumulativeData.push(cumulativeExpenditure);
+        });
+        const curMonthCumulativeData: number[] = [];
+        dailyData.forEach((d, i) => {
+            const cumulativeExpenditure = curMonthCumulativeData.length > 0 ? curMonthCumulativeData[curMonthCumulativeData.length - 1] + d.expenditure : d.expenditure;
+            curMonthCumulativeData.push(cumulativeExpenditure);
+        });
+
+        const prevExpenditurePoints = prevMonthCumulativeData.map((d, i) => `${scaleX(i)},${scaleY(d)}`).join(" ");
+        const currExpenditurePointsArray = curMonthCumulativeData.map((d, i) => `${scaleX(i)},${scaleY(d)}`);
+        const currExpenditurePoints = currExpenditurePointsArray.join(" ");
+
+        // 마지막 데이터 포인트의 X, Y 좌표 계산
+        const lastPoint: string[] = currExpenditurePointsArray[currExpenditurePointsArray.length - 1].split(",");
+        const lastPointX = parseFloat(lastPoint[0]);
+        const lastPointY = parseFloat(lastPoint[1]);
+
+        return (
+            <View style={styles.containerChart}>
+                <Svg width={width} height={height}>
+                    <Polyline points={prevExpenditurePoints} fill="none" stroke="gray" strokeWidth={2} />
+                    <Polyline points={currExpenditurePoints} fill="none" stroke="red" strokeWidth={2} />
+                    {/* 마지막 데이터 포인트 추가 */}
+                    <Circle cx={lastPointX} cy={lastPointY} r={5} fill="red" />
+                </Svg>
+            </View>
+        );
     }
 
     render() {
@@ -284,8 +479,7 @@ export default class TossTabMyExpenditure extends React.Component<any, MyExpendi
                             <Text style={[styles.defaultFont, styles.buttonAnalysisText]}>분석 전체보기</Text>
                             <Icon name="chevron-right" size={20} />
                         </TouchableOpacity>
-                        {/* FIXME 차트 추가 */}
-                        <View style={styles.expenditureChart} />
+                        {this.renderChart(80, 185)}
                     </View>
                     <View style={styles.containerExpenditureMainCategory}>
                         <View style={styles.containerExpenditureMainCategoryDescription}>
@@ -320,6 +514,24 @@ export default class TossTabMyExpenditure extends React.Component<any, MyExpendi
                                     <View style={[styles.dayCircle, item.day === this.state.selectedDay ? styles.selectedDay : null]}>
                                         <Text style={[styles.defaultFont, item.day ? styles.dayText : undefined]}>{item.day || ''}</Text>
                                     </View>
+                                    {/* dailyData 에서 해당 날짜가 있는지 확인하고 있으면 해당 날짜의 revenue 와 expenditure 를 각각 표시 */}
+                                    {dailyData.find(data => new Date(data.date).getDate() === parseInt(item.key)) && (
+                                        <View>
+                                            {(() => {
+                                                const dailyRecord = dailyData.find(data => new Date(data.date).getDate() === parseInt(item.key));
+                                                return (
+                                                    <>
+                                                        {dailyRecord && dailyRecord.revenue > 0 && (
+                                                            <Text style={styles.revenueText}>{'+' + dailyRecord.revenue.toLocaleString()}</Text>
+                                                        )}
+                                                        {dailyRecord && dailyRecord.expenditure > 0 && (
+                                                            <Text style={styles.expenditureText}>{'-' + dailyRecord.expenditure.toLocaleString()}</Text>
+                                                        )}
+                                                    </>
+                                                );
+                                            })()}
+                                        </View>
+                                    )}
                                 </TouchableOpacity>
                             )}
                         />
@@ -384,10 +596,9 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: '#A0A0A0',
     },
-    expenditureChart: {
+    containerChart: {
         width: 185,
         height: 80,
-        backgroundColor: 'red',
         opacity: 0.5,
         position: 'absolute',
         right: 0,
@@ -430,7 +641,7 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
     containerCalendarDay: {
-        width: 30,
+        width: 'auto',
         height: 70,
         alignItems: 'center',
     },
@@ -447,5 +658,15 @@ const styles = StyleSheet.create({
     dayText: {
         fontSize: 17, 
         color: '#000000',
+    },
+    revenueText: {
+        fontSize: 8,
+        color: '#0099FF',
+        textAlign: 'center',
+    },
+    expenditureText: {
+        fontSize: 8,
+        color: '#D44950',
+        textAlign: 'center',
     },
 });
