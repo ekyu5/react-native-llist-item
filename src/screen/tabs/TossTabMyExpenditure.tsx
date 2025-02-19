@@ -52,6 +52,165 @@ const monthlyData = [
         expenditure: 1200000,
     },
 ]
+
+const dailyeData = [
+    {
+        date: '2025-01-01',
+        expenditure: 10000,
+        revenue: 100000,
+    },
+    {
+        date: '2025-01-02',
+        expenditure: 20000,
+        revenue: 200000,
+    },
+    {
+        date: '2025-01-03',
+        expenditure: 30000,
+        revenue: 300000,
+    },
+    {
+        date: '2025-01-04',
+        expenditure: 40000,
+        revenue: 400000,
+    },
+    {
+        date: '2025-01-05',
+        expenditure: 50000,
+        revenue: 500000,
+    },
+    {
+        date: '2025-01-06',     
+        expenditure: 60000,
+        revenue: 600000,
+    },
+    {
+        date: '2025-01-07',
+        expenditure: 70000,
+        revenue: 700000,
+    },
+    {
+        date: '2025-01-08',
+        expenditure: 80000,
+        revenue: 800000,
+    },
+    {
+        date: '2025-01-09',
+        expenditure: 90000,
+        revenue: 900000,
+    },
+    {
+        date: '2025-01-10',
+        expenditure: 100000,
+        revenue: 1000000,
+    },
+    {
+        date: '2025-01-11',
+        expenditure: 110000,
+        revenue: 1100000,
+    },
+    {
+        date: '2025-01-12',
+        expenditure: 120000,
+        revenue: 1200000,
+    },
+    {
+        date: '2025-01-13',
+        expenditure: 130000,
+        revenue: 1300000,
+    },
+    {
+        date: '2025-01-14',
+        expenditure: 140000,
+        revenue: 1400000,
+    },
+    {
+        date: '2025-01-15',
+        expenditure: 150000,
+        revenue: 1500000,
+    },
+    {
+        date: '2025-01-16',
+        expenditure: 160000,
+        revenue: 1600000,
+    },
+    {
+        date: '2025-01-17',
+        expenditure: 170000,
+        revenue: 1700000,
+    },
+    {
+        date: '2025-01-18',
+        expenditure: 180000,
+        revenue: 1800000,
+    },
+    {
+        date: '2025-01-19',
+        expenditure: 190000,
+        revenue: 1900000,
+    },
+    {
+        date: '2025-01-20',
+        expenditure: 200000,
+        revenue: 2000000,
+    },
+    {
+        date: '2025-01-21',
+        expenditure: 210000,
+        revenue: 2100000,
+    },
+    {
+        date: '2025-01-22',
+        expenditure: 220000,
+        revenue: 2200000,
+    },
+    {
+        date: '2025-01-23',
+        expenditure: 230000,
+        revenue: 2300000,
+    },
+    {
+        date: '2025-01-24',
+        expenditure: 240000,
+        revenue: 2400000,
+    },
+    {
+        date: '2025-01-25',
+        expenditure: 250000,
+        revenue: 2500000,
+    },
+    {
+        date: '2025-01-26',
+        expenditure: 260000,
+        revenue: 2600000,
+    },  
+    {
+        date: '2025-01-27',
+        expenditure: 270000,
+        revenue: 2700000,
+    },
+    {
+        date: '2025-01-28',
+        expenditure: 280000,
+        revenue: 2800000,
+    },
+    {
+        date: '2025-01-29',
+        expenditure: 290000,
+        revenue: 2900000,
+    },
+    {
+        date: '2025-01-30',
+        expenditure: 300000,
+        revenue: 3000000,
+    },
+    {
+        date: '2025-01-31',
+        expenditure: 310000,
+        revenue: 3100000,
+    },
+]
+
 class MyExpenditureState {
     selectedMonth: number = 0;
     selectedYear: number = 0;
@@ -125,6 +284,7 @@ export default class TossTabMyExpenditure extends React.Component<any, MyExpendi
                             <Text style={[styles.defaultFont, styles.buttonAnalysisText]}>분석 전체보기</Text>
                             <Icon name="chevron-right" size={20} />
                         </TouchableOpacity>
+                        {/* FIXME 차트 추가 */}
                         <View style={styles.expenditureChart} />
                     </View>
                     <View style={styles.containerExpenditureMainCategory}>

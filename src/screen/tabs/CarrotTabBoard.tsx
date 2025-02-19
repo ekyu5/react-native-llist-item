@@ -47,59 +47,66 @@ const postData = [
     },
 ];
 
-export default class CarrotTabBoard extends React.Component<any, any> {
-    render() {
-        const posts = postData.map((post) => {
-            // post.content 에서 img 태그를 찾아서 src 목록을 추출
-            const images = post.content.match(/<img src="([^"]+)"/g)?.map(img => img.match(/src="([^"]+)"/)[1]);
+const categoryList = ['맛집', '병원/약국', '미용', '분실/실종', '서초구청 소식'];
 
-            return (
-                <View key={post.id} style={styles.containerPost}>
-                    {!images && (
-                        <>
-                            <TouchableOpacity onPress={() => {console.log('onclick : ' + post.category)}}>
-                                <Text style={[styles.postCategoryBadge, styles.childMargin]}>{post.category}</Text>
-                            </TouchableOpacity>
-                            <Text style={[styles.postTitle, styles.childMargin]}>{post.title}</Text>
-                            <Text style={[styles.postContent, styles.fontColorGray, styles.childMargin]} numberOfLines={1} ellipsizeMode="tail">
-                                {post.content}
-                            </Text>
-                        </>
-                    )}
-                    {images && (
-                        <View style={{flexDirection: 'row'}}>
-                            <View style={{flex: 1}}>
-                                <TouchableOpacity onPress={() => {console.log('onclick : ' + post.category)}}>
-                                    <Text style={[styles.postCategoryBadge, styles.childMargin]}>{post.category}</Text>
-                                </TouchableOpacity>
-                                <Text style={[styles.postTitle, styles.childMargin]}>{post.title}</Text>
-                                <Text style={[styles.postContent, styles.fontColorGray, styles.childMargin]} numberOfLines={1} ellipsizeMode="tail">
-                                    {post.content}
-                                </Text>
-                            </View>
-                            <View style={[styles.postImageContainer, {justifyContent: 'flex-end'}]}>
-                                <Image source={{uri: images[0]}} style={styles.postImage} />
-                                <Text style={styles.postImageCount}>{images.length}</Text>
-                            </View>
-                        </View>
-                    )}
-                    
-                    <View style={styles.postFooter}>
-                        <View style={styles.postFooterLeft}>
-                            <Text style={[styles.postFontFooter, styles.fontColorGray]}>{post.location}</Text>
-                            <Text style={[styles.postFontFooter, styles.fontColorGray]}> · </Text>
-                            <Text style={[styles.postFontFooter, styles.fontColorGray]}>{moment(post.timeCreate).fromNow()}</Text>
-                            <Text style={[styles.postFontFooter, styles.fontColorGray]}> · </Text>
-                            <Text style={[styles.postFontFooter, styles.fontColorGray]}>조회 {post.countView}</Text>
-                        </View>
-                        <View style={styles.postFooterRight}>
-                            <Text style={[styles.postLike, styles.fontColorGray]}><Icon name="thumb-up-outline" size={20} color="#A0A0A0" /> {post.countLike}</Text>
-                        </View>
+export default class CarrotTabBoard extends React.Component<any, any> {
+    renderItem(post: any) {
+        const imgTags = post.content.match(/<img[^>]*>/g);
+        console.log('imgTags : ', imgTags);
+        const images = imgTags?.map((img: string) => img.match(/src="([^"]+)"/)?.[1]);
+        console.log('images : ', images);
+
+        let postContent;
+        if (!images || images.length === 0) {
+            postContent = (
+                <>
+                    <TouchableOpacity onPress={() => {console.log('onclick : ' + post.category)}}>
+                        <Text style={[styles.postCategoryBadge, styles.childMargin]}>{post.category}</Text>
+                    </TouchableOpacity>
+                    <Text style={[styles.postTitle, styles.childMargin]}>{post.title}</Text>
+                    <Text style={[styles.postContent, styles.fontColorGray, styles.childMargin]} numberOfLines={1} ellipsizeMode="tail">
+                        {post.content}
+                    </Text>
+                </>
+            );
+        } else {
+            postContent = (
+                <View style={{flexDirection: 'row'}}>
+                    <View style={{flex: 1}}>
+                        <TouchableOpacity onPress={() => {console.log('onclick : ' + post.category)}}>
+                            <Text style={[styles.postCategoryBadge, styles.childMargin]}>{post.category}</Text>
+                        </TouchableOpacity>
+                        <Text style={[styles.postTitle, styles.childMargin]}>{post.title}</Text>
+                        <Text style={[styles.postContent, styles.fontColorGray, styles.childMargin]} numberOfLines={1} ellipsizeMode="tail">
+                            {post.content}
+                        </Text>
+                    </View>
+                    <View style={[styles.postImageContainer, {justifyContent: 'flex-end'}]}>
+                        <Image source={{uri: images[0]}} style={styles.postImage} />
+                        <Text style={styles.postImageCount}>{images.length}</Text>
                     </View>
                 </View>
             );
-        });
-        const categoryList = ['맛집', '병원/약국', '미용', '분실/실종', '서초구청 소식'];
+        }
+        return (
+            <View key={post.id} style={styles.containerPost}>
+                {postContent}
+                <View style={styles.postFooter}>
+                    <View style={styles.postFooterLeft}>
+                        <Text style={[styles.postFontFooter, styles.fontColorGray]}>{post.location}</Text>
+                        <Text style={[styles.postFontFooter, styles.fontColorGray]}> · </Text>
+                        <Text style={[styles.postFontFooter, styles.fontColorGray]}>{moment(post.timeCreate).fromNow()}</Text>
+                        <Text style={[styles.postFontFooter, styles.fontColorGray]}> · </Text>
+                        <Text style={[styles.postFontFooter, styles.fontColorGray]}>조회 {post.countView}</Text>
+                    </View>
+                    <View style={styles.postFooterRight}>
+                        <Text style={[styles.postLike, styles.fontColorGray]}><Icon name="thumb-up-outline" size={20} color="#A0A0A0" /> {post.countLike}</Text>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+    render() {
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView horizontal contentContainerStyle={styles.categoryContentContainer}>
@@ -118,15 +125,7 @@ export default class CarrotTabBoard extends React.Component<any, any> {
                     ))}
                 </ScrollView>
                 <ScrollView>
-                    {posts}
-                    {posts}
-                    {posts}
-                    {posts}
-                    {posts}
-                    {posts}
-                    {posts}
-                    {posts}
-                    {posts}
+                    {postData.map((post) => this.renderItem(post))}
                 </ScrollView>
             </SafeAreaView>
         )
