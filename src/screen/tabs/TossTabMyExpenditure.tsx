@@ -1,7 +1,8 @@
 import React from "react";
-import { Animated, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { Svg, Line, Rect, Circle, Polyline } from 'react-native-svg';
+import { Svg, Circle, Polyline } from 'react-native-svg';
+import { ChevronDown, ChevronRight } from 'lucide-react-native';
 
 const monthlyData = [
     {
@@ -469,7 +470,7 @@ export default class TossTabMyExpenditure extends React.Component<any, MyExpendi
                         <View style={styles.containerExpenditureValue}>
                             <Text style={[styles.defaultFont, styles.textExpenditure]}>
                                 {selectedMonth?.expenditure.toLocaleString() + '원'}
-                                <Icon name="chevron-down" size={20} />
+                                <ChevronDown size={20} strokeWidth={2}/>
                             </Text>
                             <Text style={[styles.defaultFont, styles.textExpenditureDescription]}>
                                 지난달 보다 <Text style={[styles.defaultFont, { color: '#D44950' }]}>11만원</Text> 더 쓰고 있어요
@@ -477,7 +478,7 @@ export default class TossTabMyExpenditure extends React.Component<any, MyExpendi
                         </View>
                         <TouchableOpacity style={styles.buttonAnalysis}>
                             <Text style={[styles.defaultFont, styles.buttonAnalysisText]}>분석 전체보기</Text>
-                            <Icon name="chevron-right" size={20} />
+                            <ChevronRight size={20} color="#A0A0A0" strokeWidth={2}/>
                         </TouchableOpacity>
                         {this.renderChart(80, 185)}
                     </View>
@@ -488,7 +489,7 @@ export default class TossTabMyExpenditure extends React.Component<any, MyExpendi
                                 <Text style={[styles.textExpenditureMainCategory]}>의료·건강·피트니스</Text>에 많이 쓰는 중
                             </Text>
                         </View>
-                        <Icon name="chevron-right" size={20} color="#A0A0A0" />
+                        <ChevronRight size={20} color="#A0A0A0" strokeWidth={2}/>
                     </View>
                     <View style={styles.horizontalLine} />
                     <View style={styles.containerCalendar}>

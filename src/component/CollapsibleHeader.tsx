@@ -10,8 +10,7 @@ import {
     Button
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { NavProps } from '../../AppStack';
-
+import { ChevronLeft } from 'lucide-react-native';
 const window = Dimensions.get("window");
 
 interface CollapsibleHeaderProps {
@@ -41,7 +40,7 @@ export default class CollapsibleHeader extends React.Component<PropsWithChildren
                     </Text> */}
                     <View style={styles.header}>
                         <TouchableOpacity onPress={() => {console.log('back')}}>
-                            <Icon name="chevron-left" size={30} color="black" />
+                            <ChevronLeft size={30} color="black" />
                         </TouchableOpacity>
                         <Text style={styles.headerText}>{this.props.headerText}</Text>
                     </View>
