@@ -441,10 +441,10 @@ export default class TossTabMyExpenditure extends React.Component<any, MyExpendi
         return (
             <View style={styles.containerChart}>
                 <Svg width={width} height={height}>
-                    <Polyline points={prevExpenditurePoints} fill="none" stroke="gray" strokeWidth={2} />
-                    <Polyline points={currExpenditurePoints} fill="none" stroke="red" strokeWidth={2} />
+                    <Polyline points={prevExpenditurePoints} fill="none" stroke="gray" strokeWidth={4} />
+                    <Polyline points={currExpenditurePoints} fill="none" stroke="red" strokeWidth={4} />
                     {/* 마지막 데이터 포인트 추가 */}
-                    <Circle cx={lastPointX} cy={lastPointY} r={5} fill="red" />
+                    <Circle cx={lastPointX} cy={lastPointY} r={6} fill="red" />
                 </Svg>
             </View>
         );

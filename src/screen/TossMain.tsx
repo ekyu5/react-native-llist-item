@@ -7,7 +7,6 @@
 
 import React from 'react';
 import {
-  Image,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -20,7 +19,7 @@ import MainItemContainer from '../component/MainItemContainer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AccountBalanceItem from '../component/AccountBalanceItem';
 import { PageName } from '../../AppStack';
-
+import { ChevronRight } from 'lucide-react-native';
 const accountData = [
   {
     image: 'https://i.pravatar.cc/50',
@@ -102,7 +101,7 @@ export default class TossMain extends React.Component<any, any> {
             <MainItemContainer>
               <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}} onPress={() => {console.log('onclick : ' + '토스뱅크')}}>  
                 <Text style={[styles.defaultFont, styles.textTitle]}>토스뱅크</Text>
-                <Icon name="chevron-right" size={25} color="#A0A0A0" />
+                <ChevronRight size={25} color="#A0A0A0" strokeWidth={2}/>
               </TouchableOpacity>
             </MainItemContainer>
             <MainItemContainer>
@@ -139,7 +138,7 @@ export default class TossMain extends React.Component<any, any> {
               <View style={styles.horizontalLine} />
               <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}} onPress={() => {console.log('onclick : ' + '내 계좌 · 대출 · 증권 · 포인트 보기')}}>
                 <Text style={[styles.defaultFont, styles.textSmall, styles.textViewDetail]}>내 계좌 · 대출 · 증권 · 포인트 보기</Text>
-                <Icon name="chevron-right" size={25} color="#A0A0A0" />
+                <ChevronRight size={25} color="#A0A0A0" strokeWidth={2}/>
               </TouchableOpacity>
             </MainItemContainer>
             <MainItemContainer>
@@ -175,7 +174,7 @@ export default class TossMain extends React.Component<any, any> {
                   <Icon name="progress-check" size={25} />
                   <Text style={[styles.defaultFont, styles.textCredit]}>내 신용 점수</Text>
                 </TouchableOpacity>
-                <Icon name="chevron-right" size={25} color="#A0A0A0" />
+                <ChevronRight size={25} color="#A0A0A0" strokeWidth={2}/>
               </View>
               <View style={styles.horizontalLine} />
               <View style={styles.containerOpen}>

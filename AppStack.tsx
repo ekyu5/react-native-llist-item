@@ -9,7 +9,7 @@ import { Text, TouchableOpacity } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 
 export interface NavProps {
-  navigation: NavigationProp<any>;
+  navigation: any;
   route?: any;
 }
 
@@ -21,6 +21,12 @@ export enum PageName {
 }
 
 const Stack = createNativeStackNavigator();
+
+interface CarrotPostProps {
+  navigation: NavigationProp<any>;
+  route: { params: { post: any }; };
+}
+
 export const AppStack = () => {
   return (
     <Stack.Navigator initialRouteName={PageName.TossMain}

@@ -1,8 +1,8 @@
 import React, { PropsWithChildren } from "react";
 import { Button, Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import 'moment/locale/ko';
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import moment from "moment";
+import { Crown, MapPin, X } from "lucide-react-native";
 
 interface CardProps {
     title: string;
@@ -74,7 +74,7 @@ export default class CarrotTabHome extends React.Component<any, any> {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <ScrollView contentContainerStyle={styles.cardContainer}>
+                <ScrollView contentContainerStyle={styles.cardContainer} nestedScrollEnabled={true}>
                     <Card title="일정">
                         <View style={styles.containerCardContentEmpty}>
                             <Text style={styles.textScheduleTitle}>일정이 없어요.</Text>
@@ -83,7 +83,7 @@ export default class CarrotTabHome extends React.Component<any, any> {
                                 <Text style={styles.textButtonCreateSchedule}>일정 만들기</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.closeButton}>
-                                <Icon name="close" size={30} color="#808080" />
+                                <X size={30} color="#808080" strokeWidth={1} />
                             </TouchableOpacity>
                         </View>
                     </Card>
@@ -111,7 +111,7 @@ export default class CarrotTabHome extends React.Component<any, any> {
                                     <Image source={{uri: item.avatar}} style={styles.avatar} />
                                     <View style={styles.containerCardContentMemberItemContent}>
                                         <Text style={styles.textMemberName}>{item.name}</Text>
-                                        <Icon name="crown" size={16} color="#DFAF00" />
+                                        <Crown size={16} color="#DFAF00" />
                                         <Text style={styles.textMemberLocation}>{item.location}</Text>
                                     </View>
                                 </View>
@@ -126,11 +126,11 @@ export default class CarrotTabHome extends React.Component<any, any> {
                                         <Text style={styles.textIntroductionDescription}>{item.description}</Text>
                                         <View style={styles.containerCardContentItemIntroductionTags}>
                                             <View style={styles.containerIntroductionTags}>
-                                                <Icon name="map-marker" size={16} color="#808080" />
+                                                <MapPin size={16} color="#808080" />
                                                 <Text style={styles.textIntroductionTags}>{item.location}</Text>
                                             </View>
                                             {item.tags.map(tag => (
-                                                <Text style={[styles.containerIntroductionTags, styles.textIntroductionTags]}>{tag}</Text>
+                                                <Text key={tag} style={[styles.containerIntroductionTags, styles.textIntroductionTags]}>{tag}</Text>
                                             ))}
                                         </View>
                                     </View>
@@ -146,13 +146,11 @@ export default class CarrotTabHome extends React.Component<any, any> {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#F0F0F0',
     },
     cardContainer: {
     },
     containerCardContentEmpty: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 35,
@@ -254,6 +252,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        gap: 5,
     },
     textIntroductionDescription: {
         fontSize: 14,
@@ -272,6 +271,7 @@ const styles = StyleSheet.create({
         marginRight: 5,
         marginTop: 15,
         flexDirection: 'row',
+        alignItems: 'center',
     },
     textIntroductionTags: {
         fontSize: 14,
